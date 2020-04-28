@@ -3,37 +3,19 @@ import './App.css';
 import Users from "./components/Users";
 import Products from "./components/Products";
 import Login from "./components/Login";
+import PrivateRoute from "./components/PrivateRoute";
+import Logout from "./components/Logout";
 import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link, withRouter, useHistory, useLocation,
+  Link,
 } from "react-router-dom";
-import PrivateRoute from "./components/PrivateRoute";
-import {fakeAuth} from "./auth/Auth";
-import Logout from "./components/Logout";
 
-
-// const LogoutButton = withRouter(({ history }) => (
-//     <button type='button' onClick={() => { fakeAuth.signout(() => {history.push('/') }) }}>
-//       Logout
-//     </button>
-// ));
 
 class App extends React.Component {
-  constructor(props) {
-    super(props);
-
-
-    this.state = {isLoggedIn: fakeAuth.isAuthenticated};
-  }
-
 
   render() {
-
-
-
-
     return (
         <Router>
           <div className="App">
@@ -47,11 +29,11 @@ class App extends React.Component {
                   <li className="nav-item">
                     <Link className="nav-link" to="/users">Users</Link>
                   </li>
-                  <li>
+                  <li className="nav-item">
                     <Link className="nav-link" to="/products">Products</Link>
                   </li>
                   <li>
-                    <p>{this.state.isLoggedIn}</p>
+                    <Logout/>
                   </li>
                 </ul>
               </div>
@@ -62,25 +44,7 @@ class App extends React.Component {
                 <p>Home</p>
               </Route>
               <Route path="/login">
-
-                <div>
-                  <p>You must log in to view the page</p>
-                  <button onClick={() => {
-
-                    let history = useHistory();
-                    let location = useLocation();
-                    let { from } = location.state || { from: { pathname: "/" } };
-
-
-                    fakeAuth.authenticate(() => {
-                      history.replace(from);
-                      this.setState({isLoggedIn: fakeAuth.isAuthenticated});
-                    });
-                  }}>Log in</button>
-                </div>
-
-
-                {/*<Login/>*/}
+                <Login/>
               </Route>
               <PrivateRoute path="/users">
                 <Users/>

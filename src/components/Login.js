@@ -7,15 +7,17 @@ function Login() {
     let location = useLocation();
     let { from } = location.state || { from: { pathname: "/" } };
 
+    let login = () => {
+        fakeAuth.authenticate(() => {
+            history.replace(from);
+        });
+    };
+
     return (
-        <div>
-            <p>You must log in to view the page</p>
-            <button onClick={() => {
-                fakeAuth.authenticate(() => {
-                    history.replace(from);
-                });
-            }}>Log in</button>
-        </div>
+    <div>
+        <p>You must log in to view the page at {from.pathname}</p>
+        <button onClick={login}>Log in</button>
+    </div>
     );
 }
 
